@@ -37,10 +37,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p public-site
+          cp -R dist/. public-site/
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./dist
+          path: ./public-site
 
   deploy:
     needs: build
