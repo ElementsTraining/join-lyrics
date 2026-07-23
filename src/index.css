@@ -158,39 +158,34 @@ button {
 }
 
 .editor-shell {
-  display: flex;
-  align-items: stretch;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   overflow: hidden;
   background: rgba(3, 10, 18, 0.75);
 }
 
-.line-numbers {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  padding: 12px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #7c8ca3;
-  font-size: 0.82rem;
-  line-height: 1.7;
-  min-width: 42px;
-  user-select: none;
+.editor-shell .cm-editor {
+  min-height: 240px;
+  background: transparent;
 }
 
-.editor-shell textarea {
-  flex: 1;
-  min-height: 240px;
-  resize: vertical;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #f5f8ff;
-  padding: 12px 14px;
-  line-height: 1.7;
+.editor-shell .cm-scroller {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+.editor-shell .cm-content {
+  padding: 12px 14px;
+  color: #f5f8ff;
+}
+
+.editor-shell .cm-gutters {
+  background: rgba(255, 255, 255, 0.05);
+  color: #7c8ca3;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.editor-shell .cm-lineNumbers {
+  font-size: 0.82rem;
 }
 
 .output-preview {
@@ -206,7 +201,7 @@ button {
 .projection-preview {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .projection-card {
@@ -215,6 +210,8 @@ button {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
   padding: 14px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+  width: min(100%, 468px);
+  margin: 0 auto;
 }
 
 .projection-card-title {
@@ -230,15 +227,19 @@ button {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-items: center;
 }
 
 .projection-line {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 8px 10px;
+  gap: 8px;
+  padding: 10px 12px;
   border-radius: 10px;
   background: rgba(3, 10, 18, 0.45);
+  width: 100%;
+  max-width: 416px;
+  overflow-x: auto;
 }
 
 .projection-code {
@@ -247,11 +248,39 @@ button {
   letter-spacing: 0.1em;
   color: #8da0b8;
   text-transform: uppercase;
+  text-align: center;
 }
 
-.projection-text {
+.projection-row-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.projection-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   color: #f5f8ff;
   white-space: pre-wrap;
+  text-align: left;
+  min-width: max-content;
+}
+
+.projection-row-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  color: #8fd4ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.projection-row-text {
+  flex: 1;
+  text-align: center;
 }
 
 .projection-empty {

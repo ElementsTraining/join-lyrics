@@ -42,10 +42,15 @@ function buildStanzaPreview(languages, orderedCodes) {
   const stanzas = [];
 
   for (let index = 0; index < stanzaCount; index += 1) {
-    const stanzaLines = orderedCodes.map((code) => ({
-      code,
-      text: splitStanzas(languages[code] ?? '')[index] ?? '',
-    }));
+    const stanzaLines = orderedCodes.map((code) => {
+      const stanzaText = splitStanzas(languages[code] ?? '')[index] ?? '';
+      const rows = stanzaText.split('\n').filter(Boolean);
+
+      return {
+        code,
+        rows,
+      };
+    });
 
     stanzas.push({
       id: index + 1,
@@ -263,7 +268,17 @@ function App() {
                   {stanza.lines.map((line) => (
                     <div className="projection-line" key={`${stanza.id}-${line.code}`}>
                       <span className="projection-code">{line.code.toUpperCase()}</span>
-                      <span className="projection-text">{line.text || '—'}</span>
+                      <div className="projection-row-group">
+                        {line.rows.length === 0 ? (
+                          <span className="projection-row">—</span>
+                        ) : (
+                          line.rows.map((row, rowIndex) => (
+                            <div className="projection-row" key={`${stanza.id}-${line.code}-${rowIndex}`}>
+                              <span className="projection-row-text">{row}</span>
+                            </div>
+                          ))
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>

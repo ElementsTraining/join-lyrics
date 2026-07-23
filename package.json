@@ -1,7 +1,7 @@
 {
   "name": "lyrics-alignment-webapp",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@uiw/react-codemirror": "^4.25.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
