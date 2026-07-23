@@ -203,6 +203,64 @@ button {
   color: #f5f8ff;
 }
 
+.projection-preview {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.projection-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+}
+
+.projection-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8fd4ff;
+  margin-bottom: 10px;
+}
+
+.projection-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.projection-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(3, 10, 18, 0.45);
+}
+
+.projection-code {
+  font-size: 0.77rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #8da0b8;
+  text-transform: uppercase;
+}
+
+.projection-text {
+  color: #f5f8ff;
+  white-space: pre-wrap;
+}
+
+.projection-empty {
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 16px;
+  color: #8da0b8;
+}
+
 .helper {
   color: #8da0b8;
   font-size: 0.95rem;

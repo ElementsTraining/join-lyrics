@@ -37,6 +37,25 @@ function buildAlignedText(languages, orderedCodes) {
   return blocks.join('').trim();
 }
 
+function buildStanzaPreview(languages, orderedCodes) {
+  const stanzaCount = Math.max(...orderedCodes.map((code) => splitStanzas(languages[code] ?? '').length), 0);
+  const stanzas = [];
+
+  for (let index = 0; index < stanzaCount; index += 1) {
+    const stanzaLines = orderedCodes.map((code) => ({
+      code,
+      text: splitStanzas(languages[code] ?? '')[index] ?? '',
+    }));
+
+    stanzas.push({
+      id: index + 1,
+      lines: stanzaLines,
+    });
+  }
+
+  return stanzas;
+}
+
 function getInitialLocale() {
   const browserLocale = navigator.language?.toLowerCase() ?? '';
 
@@ -82,6 +101,7 @@ function App() {
   }, [extraLanguages]);
 
   const alignedText = useMemo(() => buildAlignedText(allLanguages, orderedCodes), [allLanguages, orderedCodes]);
+  const stanzaPreview = useMemo(() => buildStanzaPreview(allLanguages, orderedCodes), [allLanguages, orderedCodes]);
   const stanzaMismatch = useMemo(() => {
     const languageCounts = orderedCodes.map((code) => splitStanzas(allLanguages[code] ?? '').length);
     return languageCounts.some((count) => count !== languageCounts[0]) && languageCounts.some((count) => count > 0);
@@ -230,6 +250,27 @@ function App() {
 
         <h3 style={{ marginBottom: 10 }}>{t('previewTitle')}</h3>
         <div className="output-preview">{alignedText || t('emptyPreview')}</div>
+
+        <h3 style={{ margin: '18px 0 10px' }}>{t('projectionPreviewTitle')}</h3>
+        <div className="projection-preview" aria-label="projection preview">
+          {stanzaPreview.length === 0 ? (
+            <div className="projection-empty">{t('emptyPreview')}</div>
+          ) : (
+            stanzaPreview.map((stanza) => (
+              <div className="projection-card" key={stanza.id}>
+                <div className="projection-card-title">Stanza {stanza.id}</div>
+                <div className="projection-card-body">
+                  {stanza.lines.map((line) => (
+                    <div className="projection-line" key={`${stanza.id}-${line.code}`}>
+                      <span className="projection-code">{line.code.toUpperCase()}</span>
+                      <span className="projection-text">{line.text || '—'}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </section>
     </div>
   );

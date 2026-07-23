@@ -25,6 +25,26 @@ describe('Lyrics alignment builder', () => {
     expect(screen.queryByText(/warning: the number of stanzas|atenção: o número de estrofes/i)).not.toBeInTheDocument();
   });
 
+  it('renders a projection-style stanza preview for each aligned stanza', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const ptInput = screen.getByLabelText(/Português/i);
+    const deInput = screen.getByLabelText(/Deutsch/i);
+    const enInput = screen.getByLabelText(/English/i);
+
+    await user.clear(ptInput);
+    await user.clear(deInput);
+    await user.clear(enInput);
+
+    await user.type(ptInput, 'First verse\n\nSecond verse');
+    await user.type(deInput, 'Erste Strophe\n\nZweite Strophe');
+    await user.type(enInput, 'First verse\n\nSecond verse');
+
+    expect(screen.getByText(/projection preview/i)).toBeInTheDocument();
+    expect(screen.getByText('Stanza 1')).toBeInTheDocument();
+  });
+
   it('shows a warning when stanza counts differ', async () => {
     const user = userEvent.setup();
     render(<App />);
